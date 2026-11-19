@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,4 +15,17 @@ datasource db {
 model HealthCheck {
   id Int  @id @default(autoincrement())
   createdAt DateTime @default(now())
+}
+
+enum Role {
+  ADMIN
+  MERCHANT
+}
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(MERCHANT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

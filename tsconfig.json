@@ -10,7 +10,7 @@
     "module": "NodeNext",
     "target": "ES2022",
     "moduleResolution": "NodeNext",
-    "types": ["node"],
+    "types": ["node", "jest"],
 
     // JavaScript Compatibility
     "esModuleInterop": true,

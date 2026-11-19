@@ -19,3 +19,15 @@ export class BadRequestError extends AppError {
         super(400 , message , 'BAD_REQUEST')
     }
 }
+
+export class ConflictError extends AppError {
+    constructor(message='Resource already exsists'){
+        super(409,message, 'CONFLICT');
+    }
+
+}
+export class UnauthorizedError  extends AppError {
+    constructor(message = 'Unauthorized'){
+        super(401, message ,'UNAUTHORIZED');
+    }
+}

@@ -1,25 +1,41 @@
-import type { NextFunction, Request, Response } from 'express';
+
+import type { Request, Response, NextFunction } from 'express';
 import { AppError, NotFoundError } from '../common/error.js';
 import { logger } from '../common/logger.js';
 
+// Handle unknown routes
+export const NotFoundHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    next(new NotFoundError(
+        `Route ${req.method} ${req.originalUrl} not found`
+    ));
+};
 
-// Not found handler function
-export const NotFoundHandler = (err: Error , req:Request , res:Response , next: NextFunction)=>{
-    next(new NotFoundError(`Route ${req.method} ${req.originalUrl} not found`));
-}
-
-export const errorHandler = (err: Error , req:Request , res:Response , next: NextFunction) =>{
-    if (err instanceof AppError){
+// Global error handler
+export const errorHandler = (
+    err: unknown,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (err instanceof AppError) {
         return res.status(err.statusCode).json({
-            error:{code:err.code , message: err.message}
+            error: {
+                code: err.code,
+                message: err.message,
+            },
         });
     }
-    logger.error({err}, 'Unhandeld error');
-        return res.status(500).json({
-        error:{code:"Internal_Error" , message:'Something went error'}
-})
-}
 
+    logger.error({ err }, 'Unhandled error');
 
-
-
+    return res.status(500).json({
+        error: {
+            code: 'INTERNAL_ERROR',
+            message: 'Something went wrong',
+        },
+    });
+};

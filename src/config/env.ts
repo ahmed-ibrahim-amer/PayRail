@@ -8,6 +8,7 @@ const envSchema = z.object({
     DATABASE_URL:z.string().min(1,'DATABASE_URL is required'),
     DIRECT_URL:z.string().optional(),
     JWT_SECRET:z.string().min(16,'JWT_SECRET Must be at least 16 charcters'),
+    JWT_EXPIRES_IN:z.string().default('15m')
 });
 
 const parsed = envSchema.safeParse(process.env); //check variabels and not throw an error

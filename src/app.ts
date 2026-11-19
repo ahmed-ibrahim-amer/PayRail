@@ -1,9 +1,9 @@
 import express from 'express';
 import { prisma } from './infrastructure/prisma.js';
-import pinoHttp from 'pino-http';
+import {pinoHttp} from 'pino-http';
 import { logger } from '../src/common/logger.js';
 import { errorHandler, NotFoundHandler } from '../src/middlewares/error.middleware.js';
-
+import  authRoute  from './modules/auth/auth.routes.js';
 
 export const app  = express();
 
@@ -23,6 +23,9 @@ app.get('/health' , async (req,res)=>{
         res.status(503).json({status:'error',database:'down'})
     }
 })
+
+//Routes
+app.use('/api/v1/auth', authRoute);
 
 //middlewares for error handlers
 app.use(NotFoundHandler);
