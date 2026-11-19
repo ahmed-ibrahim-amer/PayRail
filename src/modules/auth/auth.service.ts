@@ -4,7 +4,7 @@ import type { RegisterInput } from './auth.schema.js';
 import { prisma } from '../../infrastructure/prisma.js';
 import {env} from '../../config/env.js';
 import type { LoginInput } from './auth.schema.js';
-import { generateAccessToken } from './token.service';
+import { generateAccessToken } from './token.service.js';
 
 
 
